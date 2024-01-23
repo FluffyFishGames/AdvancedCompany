@@ -40,4 +40,4 @@ Please note: These logs will get overwritten everytime you start the game. So pl
 Please provide a list of all mods you have installed. 
 
 Go to Settings and select "Show dependency strings" and copy the text here.
-A code to your profile might also be helpful.
+Exporting your profile and attaching it to the issue might also help.
