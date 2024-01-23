@@ -31,4 +31,13 @@ Please attach log files to your issue. If this is a multiplayer specific issue p
 
 You can find the logs of the game in %appdata%/../LocalLow/ZeekerssRBLX/Lethal Company/
 
+The log file is called "Player.log" (or just Player if you have file extensions hidden)
+
 Please note: These logs will get overwritten everytime you start the game. So please get your logs right when the issue occured.
+
+**Add a list of all of your mods**
+
+Please provide a list of all mods you have installed. 
+
+Go to Settings and select "Show dependency strings" and copy the text here.
+A code to your profile might also be helpful.
