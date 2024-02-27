@@ -1,0 +1,6 @@
+/bin
+*.meta
+.vs
+.git
+.github
+obj
