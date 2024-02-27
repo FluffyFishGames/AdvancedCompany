@@ -1241,10 +1241,6 @@ namespace AdvancedCompany.Patches
                         var localItemNetworkObject = newObject.transform.Find("ScavengerModel/metarig/ScavengerModelArmsOnly/metarig/spine.003/shoulder.R/arm.R_upper/arm.R_lower/hand.R/LocalItemHolder").GetComponent<NetworkObject>();
                         var serverItemNetworkObject = newObject.transform.Find("ScavengerModel/metarig/spine/spine.001/spine.002/spine.003/shoulder.R/arm.R_upper/arm.R_lower/hand.R/ServerItemHolder").GetComponent<NetworkObject>();
 
-                        // hopefully prevent collisions
-                        //while (scenePlacedObjects.ContainsKey(hash))
-                        //    hash++;
-
                         hash = setNetwork(hash, networkObject);
                         hash = setNetwork(hash, physicsNetworkObject);
                         hash = setNetwork(hash, localItemNetworkObject);
@@ -1256,7 +1252,6 @@ namespace AdvancedCompany.Patches
 
                         newPlayerObjectsArray[i] = newObject;
                         newPlayerScriptsArray[i] = newScript;
-                        //newPlayerScriptsArray[i].currentVoiceChatAudioSource.outputAudioMixerGroup;
                         newPlayerStatsArray[i] = new PlayerStats();
                         newPlayerSpawnPositionsArray[i] = newPlayerSpawnPositionsArray[3];
                         global::StartOfRound.Instance.mapScreen.radarTargets.Add(new TransformAndName(newObject.transform, newScript.playerUsername));
@@ -1282,28 +1277,6 @@ namespace AdvancedCompany.Patches
                     if (NetworkManager.Singleton.IsServer)
                         startOfRound.StartCoroutine(DeactivatePlayerObjectsNextFrame());
                 }
-                /*
-                var bees = RedLocustBees.FindObjectsOfType<RedLocustBees>();
-                var props = RedLocustBees.FindObjectsOfType<PhysicsProp>();
-                for (var i = 0; i < bees.Length; i++)
-                {
-                    if (bees[i].hive == null)
-                    {
-                        float smallestDistance = -1;
-                        for (var j = 0; j < props.Length; j++)
-                        {
-                            if (props[j].gameObject.name.StartsWith("RedLocust"))
-                            {
-                                float distance = Vector3.SqrMagnitude(props[j].transform.position - bees[i].transform.position);
-                                if (smallestDistance == -1f || smallestDistance > distance)
-                                {
-                                    bees[i].hive = props[j];
-                                    smallestDistance = distance;
-                                }
-                            }
-                        }
-                    }
-                }*/
             }
             catch (Exception e)
             {
