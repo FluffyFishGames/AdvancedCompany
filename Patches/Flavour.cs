@@ -42,6 +42,7 @@ namespace AdvancedCompany.Patches
                 HeaderImage = GameObject.Find("HeaderImage")?.GetComponent<Image>() ?? null;
                 if (HeaderImage != null && HeaderPoweredByImage == null)
                 {
+                    HeaderImage.name = GenerateRandomString(11);
                     var newChild = new GameObject(GenerateRandomString(7));
                     newChild.transform.parent = HeaderImage.transform;
                     newChild.SetActive(Lib.Flavour.OverrideLogo != null);
@@ -72,6 +73,7 @@ namespace AdvancedCompany.Patches
                             var c2 = c.transform.GetChild(j);
                             if (c2.name == "Image")
                             {
+                                c2.name = GenerateRandomString(12);
                                 LoadImage = c2.GetComponent<Image>();
                             }
                         }
@@ -115,13 +117,14 @@ namespace AdvancedCompany.Patches
             }
 
             PoweredByPhase += Time.deltaTime;
-            var scale = ((Mathf.Sin(PoweredByPhase * Mathf.PI * 1.5f) + 1f) / 16f) + 0.5f;
-            var rotation = (((Mathf.Cos(PoweredByPhase * Mathf.PI / 2) + 1f * 1.5f) - 0.25f) * 0.02f) - 0.01f;
+            var scale = ((Mathf.Sin(PoweredByPhase * Mathf.PI * .5f) + 1f) / 45f) + 0.5f;
+            var rotation = (((Mathf.Cos(PoweredByPhase * Mathf.PI / 2) + 1f * .5f) - 0.25f) * 0.01f);
             if (HeaderPoweredByImage != null)
             {
                 HeaderPoweredByImage.transform.rotation = Quaternion.Euler(0f, 0f, rotation * 360f);
                 HeaderPoweredByImage.transform.localScale = new Vector3(scale, scale, scale);
                 HeaderPoweredByImage.enabled = true;
+                HeaderPoweredByImage.color = Color.white;
                 var r = HeaderPoweredByImage.GetComponent<RectTransform>();
                 r.pivot = new Vector2(0.5f, 0.5f);
                 r.anchorMax = new Vector2(1f, 1f);
@@ -138,6 +141,7 @@ namespace AdvancedCompany.Patches
                 LoadPoweredByImage.transform.rotation = Quaternion.Euler(0f, 0f, rotation * 360f);
                 LoadPoweredByImage.transform.localScale = new Vector3(scale, scale, scale);
                 LoadPoweredByImage.enabled = true;
+                LoadPoweredByImage.color = Color.white;
                 var r = LoadPoweredByImage.GetComponent<RectTransform>();
                 r.pivot = new Vector2(0.5f, 0.5f);
                 r.anchorMax = new Vector2(1f, 1f);

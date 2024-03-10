@@ -99,6 +99,8 @@ namespace AdvancedCompany.Objects
 
         private static bool KillEnemy(EnemyAI enemy)
         {
+            if (enemy == null)
+                return true;
             if (enemy is SandWormAI)
                 return false;
             else if (enemy is BaboonBirdAI || enemy is MaskedPlayerEnemy || enemy is NutcrackerEnemyAI || enemy is SandSpiderAI || enemy is CentipedeAI || enemy is CrawlerAI || enemy is FlowermanAI || enemy is HoarderBugAI || enemy is MouthDogAI)

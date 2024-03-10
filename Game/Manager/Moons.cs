@@ -386,7 +386,7 @@ namespace AdvancedCompany.Game
                     }
                 }
 
-                Plugin.Log.LogDebug("Found moons: " + String.Join(", ", MoonsByName.Keys));
+                Plugin.Log.LogDebug("Found moons: " + string.Join(", ", MoonsByName.Keys));
 
                 AllMoons = AllMoons.OrderBy(a => a.Level.PlanetName).ToList();
 

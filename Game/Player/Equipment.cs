@@ -128,7 +128,7 @@ namespace AdvancedCompany.Game
                 var objs = Boots.CreateWearable(this);
                 equipmentItemsFeet.AddRange(objs);
                 if (ClientConfiguration.Instance.Compability.HideEquipment)
-                    HideRenderers(objs);
+                    objs.HideRenderers();
             }
 
             EquipmentItemsFeet = equipmentItemsFeet.ToArray();
@@ -152,7 +152,7 @@ namespace AdvancedCompany.Game
                 var objs = Body.CreateWearable(this);
                 equipmentItemsBody.AddRange(objs);
                 if (ClientConfiguration.Instance.Compability.HideEquipment)
-                    HideRenderers(objs);
+                    objs.HideRenderers();
             }
             EquipmentItemsBody = equipmentItemsBody.ToArray();
             AdvancedCompany.Lib.Equipment.NewBody(Controller, EquipmentItemsBody);
@@ -175,7 +175,7 @@ namespace AdvancedCompany.Game
                 var objs = Helmet.CreateWearable(this);
                 equipmentItemsHead.AddRange(objs);
                 if (ClientConfiguration.Instance.Compability.HideEquipment)
-                    HideRenderers(objs);
+                    objs.HideRenderers();
             }
             EquipmentItemsHead = equipmentItemsHead.ToArray();
             AdvancedCompany.Lib.Equipment.NewHead(Controller, EquipmentItemsHead);

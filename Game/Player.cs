@@ -214,23 +214,6 @@ namespace AdvancedCompany.Game
             }
         }
 
-        private void HideRenderers(GameObject[] objs)
-        {
-            foreach (var obj in objs)
-            {
-                var m = obj.GetComponent<MeshRenderer>();
-                if (m != null) m.enabled = false;
-                var s = obj.GetComponent<SkinnedMeshRenderer>();
-                if (s != null) s.enabled = false;
-
-                var mm = obj.GetComponentsInChildren<MeshRenderer>();
-                var ss = obj.GetComponentsInChildren<SkinnedMeshRenderer>();
-                foreach (var mmm in mm)
-                    mmm.enabled = false;
-                foreach (var sss in ss)
-                    sss.enabled = false;
-            }
-        }
 
         public void UpdateInstance()
         {
@@ -492,10 +475,6 @@ namespace AdvancedCompany.Game
             }
             return Path.Combine(Path.GetFullPath(Environment.ExpandEnvironmentVariables("%appdata%/../LocalLow/ZeekerssRBLX/Lethal Company")), "AdvancedCompany" + (backup ? ".bkp" : ""));
         }
-        private string NoPunctuation(string input)
-        {
-            return new string(input.Where((char c) => char.IsLetter(c)).ToArray());
-        }
 
         public void LoadLocal()
         {
@@ -505,7 +484,7 @@ namespace AdvancedCompany.Game
                 if (!GameNetworkManager.Instance.disableSteam)
                 {
                     SteamID = Steamworks.SteamClient.SteamId.Value;
-                    string username = NoPunctuation(new Friend(SteamID).Name);
+                    string username = new Friend(SteamID).Name.OnlyAlphanumerical();
                     username = Regex.Replace(username, "[^\\w\\._]", "");
                     Username = username;
                     Plugin.Log.LogMessage("Found steam ID: " + SteamID);

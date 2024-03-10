@@ -23,7 +23,7 @@ namespace AdvancedCompany
     [BepInDependency("com.rune580.LethalCompanyInputUtils", BepInDependency.DependencyFlags.HardDependency)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string Version = "1.1.9";
+        public const string Version = "1.1.10";
         private const string GUID = "com.potatoepet.AdvancedCompany";
         internal static ManualLogSource Log;
         internal static Plugin Instance;

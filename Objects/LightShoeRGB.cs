@@ -46,16 +46,21 @@ namespace AdvancedCompany.Objects
         {
             for (var i = 0; i < Lights.Length; i++)
             {
-                Lights[i].enabled = false;
+                if (Lights[i] != null)
+                    Lights[i].enabled = false;
             }
-            var startVolume = Audio.volume;
-            while (Audio.pitch > 0)
+            if (Audio != null)
             {
-                Audio.pitch -= Time.deltaTime / 3f;
-                Audio.volume = Audio.pitch * startVolume;
-                yield return new WaitForEndOfFrame();
+                var startVolume = Audio.volume;
+                while (Audio != null && Audio.pitch > 0)
+                {
+                    Audio.pitch -= Time.deltaTime / 3f;
+                    Audio.volume = Audio.pitch * startVolume;
+                    yield return new WaitForEndOfFrame();
+                }
             }
-            GameObject.Destroy(this.gameObject);
+            if (this.gameObject != null)
+                GameObject.Destroy(this.gameObject);
         }
 
         public void Play()

@@ -411,12 +411,12 @@ namespace AdvancedCompany.Game
 
             if (node.displayPlanetInfo > -1)
             {
-                var cost = (int) (Moons.GetMoonPrice(node.displayPlanetInfo, node.itemCost) * Perks.GetMultiplier("TravelDiscount"));
+                var cost = (int) Mathf.RoundToInt(Moons.GetMoonPrice(node.displayPlanetInfo, node.itemCost) * Perks.GetMultiplier("TravelDiscount"));
                 if (cost != -1) return cost;
             }
             if (node.buyRerouteToMoon > -1)
             {
-                var cost = (int) (Moons.GetMoonPrice(node.buyRerouteToMoon, node.itemCost) * Perks.GetMultiplier("TravelDiscount"));
+                var cost = (int) Mathf.RoundToInt(Moons.GetMoonPrice(node.buyRerouteToMoon, node.itemCost) * Perks.GetMultiplier("TravelDiscount"));
                 if (cost != -1) return cost;
             }
             if (node.buyItemIndex > -1)
