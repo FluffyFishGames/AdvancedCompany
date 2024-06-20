@@ -477,7 +477,7 @@ namespace AdvancedCompany.Patches
             {
                 Debug.Log("Can't use item; not owner");
             }
-            else if (!flashlight.RequireCooldown() && flashlight.UseItemBatteries())
+            else if (!flashlight.RequireCooldown() && flashlight.UseItemBatteries(false, true))
             {
                 if (flashlight.itemProperties.syncUseFunction)
                 {

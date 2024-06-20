@@ -67,6 +67,8 @@ public class PlayerSettings : BaseSettings<PlayerConfiguration>
 
     [Header("Graphics")]
     public ConfigTabContent GraphicsTabContent;
+    private ConfigToggle ShowOriginalLogo;
+    private ConfigToggle ShowSimplifiedCopyrightNotice;
     private ConfigSlider MusicVolume;
     private ConfigSlider VisionEnhancerBrightness;
 
@@ -114,6 +116,7 @@ public class PlayerSettings : BaseSettings<PlayerConfiguration>
         HotbarY.UpdateValue();
         InvertScroll.UpdateValue();
         SaveInProfile.UpdateValue();
+        ShowOriginalLogo.UpdateValue();
         MusicVolume.UpdateValue();
         VisionEnhancerBrightness.UpdateValue();
         DisableMusic.UpdateValue();
@@ -348,6 +351,9 @@ public class PlayerSettings : BaseSettings<PlayerConfiguration>
         configContainer = FileTabContent.AddContainer("Save in profile", "When activated your progression file will be saved in your profile folder.");
         SaveInProfile = configContainer.AddToggle(Configuration.File.Field(nameof(Configuration.File.SaveInProfile)), "Enable");
 
+        var logoContainer = GraphicsTabContent.AddContainer("Logo", "Change how AdvancedCompany handles logo replacements. You can show the original Lethal Company logo (even if a logo is defined in your ModPack) and make the copyright notice simplified (text in screen corner).");
+        ShowOriginalLogo = logoContainer.AddToggle(Configuration.Graphics.Field(nameof(Configuration.Graphics.ShowOriginalLogo)), "Original logo");
+        
         var audioContainer = GraphicsTabContent.AddContainer("Audio", "Change audio volume.");
         MusicVolume = audioContainer.AddSlider(Configuration.Graphics.Field(nameof(Configuration.Graphics.MusicVolume)), "Music volume");
 

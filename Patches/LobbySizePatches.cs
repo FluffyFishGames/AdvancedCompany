@@ -503,6 +503,16 @@ namespace AdvancedCompany.Patches
             return instructions;
         }
 
+        [HarmonyPatch(typeof(global::ButlerEnemyAI), "Start")]
+        [HarmonyTranspiler]
+        static IEnumerable<CodeInstruction> PatchButlerEnemyAIStart(IEnumerable<CodeInstruction> instructions)
+        {
+            Plugin.Log.LogDebug("Patching ButlerEnemyAI->Start...");
+            instructions = ReplaceLowerThanFourWithPlayerCount(instructions, true);
+            Plugin.Log.LogDebug("Patched ButlerEnemyAI->Start!");
+            return instructions;
+        }
+
         [HarmonyPatch(typeof(SpringManAI), "DoAIInterval")]
         [HarmonyTranspiler]
         static IEnumerable<CodeInstruction> PatchSpringManAIDoAIInterval(IEnumerable<CodeInstruction> instructions)

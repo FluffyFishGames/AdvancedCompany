@@ -51,7 +51,7 @@ namespace AdvancedCompany.Config
         {
             public bool Active = true;
             public bool OverridePowerLevel;
-            public int PowerLevel;
+            public float PowerLevel;
         }
 
         public class MoonConfig : Configuration

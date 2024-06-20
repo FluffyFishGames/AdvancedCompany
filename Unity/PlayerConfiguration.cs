@@ -7,6 +7,8 @@ namespace AdvancedCompany.Config
     {
         public class GraphicsConfig : Configuration
         {
+            public bool ShowOriginalLogo = false;
+
             [Slider(0f, 1f, Conversion = 100f, ShowValue = true)]
             public float VisionEnhancerBrightness = 0.7f;
             [Slider(0f, 1f, Conversion = 100f, ShowValue = true)]

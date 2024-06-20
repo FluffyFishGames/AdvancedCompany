@@ -14,7 +14,7 @@ namespace AdvancedCompany.Game
             {
                 public EnemyType EnemyType;
                 public LobbyConfiguration.EnemyConfig Config;
-                public int GetPowerLevel(int found)
+                public float GetPowerLevel(float found)
                 {
                     if (Config == null) return found;
 
@@ -105,7 +105,7 @@ namespace AdvancedCompany.Game
                 }
             }
 
-            public static int GetPowerLevel(EnemyType enemy)
+            public static float GetPowerLevel(EnemyType enemy)
             {
                 if (EnemiesByName.ContainsKey(enemy.enemyName))
                     return EnemiesByName[enemy.enemyName].GetPowerLevel(enemy.PowerLevel);

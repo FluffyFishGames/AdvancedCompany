@@ -37,7 +37,6 @@ namespace AdvancedCompany.UI
             {
                 ServerConfiguration.Instance.CopyFrom(configuration);
                 ServerConfiguration.Instance.WasLoaded();
-
                 try
                 {
                     ES3.Save<string>("preset", presetName, global::GameNetworkManager.Instance.currentSaveFileName);
@@ -79,13 +78,18 @@ namespace AdvancedCompany.UI
                 preset = ES3.Load<string>("preset", global::GameNetworkManager.Instance.currentSaveFileName);
             else
                 preset = ModpackConfig.Instance.StandardPreset.Value;
+            if (preset == "" || ModpackConfig.Instance.SkipPresets.Value)
+                preset = ModpackConfig.Instance.StandardPreset.Value;
             LobbyConfigurationProvider.Instance = new LobbyConfigurationProvider();
             Settings.SetConfiguration(LobbyConfigurationProvider.Instance);
             if (preset != "")
                 Settings.SelectPreset(preset);
 
             if (ModpackConfig.Instance.SkipPresets.Value)
-                StartHost();
+            {
+                ServerConfiguration.Instance.CopyFrom(Settings.SelectedPreset.Configuration);
+                ServerConfiguration.Instance.WasLoaded();
+            }
             else
                 LobbyScreen.SetActive(true);
             return false;
@@ -101,6 +105,7 @@ namespace AdvancedCompany.UI
             localPlayer.LoadLocal();
             localPlayer.LoadServer(global::GameNetworkManager.Instance.currentSaveFileName);
             localPlayer.EquipConfigurationCosmetics();
+
             ES3.Save("preset", Settings.SelectedPreset.Name);
             Network.Manager.Lobby = new Lobby()
             {

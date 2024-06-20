@@ -445,7 +445,10 @@ namespace AdvancedCompany.Game
                 return m.Value != "<focus>" ? "" : m.Value;
             });
             var focusIndex = focusSearch.IndexOf("<focus>");
-            Output.text = Text.Replace("<focus>", "");
+            var t = Text.Replace("<focus>", "");
+            if (t != Output.text)
+                Output.text = t;
+
             if (focusIndex > -1)
             {
                 UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(ScrollRect.GetComponent<RectTransform>());

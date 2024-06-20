@@ -393,6 +393,8 @@ namespace AdvancedCompany.Game
                 LobbyConfiguration.AllMoonsConfig.Moons.Clear();
                 foreach (var moon in AllMoons)
                 {
+                    if (moon.Level == null || !OriginalPrices.ContainsKey(moon.Level.PlanetName))
+                        continue;
                     var lootTable = new Dictionary<string, LobbyConfiguration.MoonConfig.LootTableItem>();
                     foreach (var item in moon.Level.spawnableScrap)
                     {
@@ -661,7 +663,7 @@ namespace AdvancedCompany.Game
 
             public static int GetMoonPrice(int moon, int defaultPrice = 0)
             {
-                if (global::StartOfRound.Instance.levels.Length > moon)
+                if (global::StartOfRound.Instance != null && global::StartOfRound.Instance.levels != null && global::StartOfRound.Instance.levels.Length > moon)
                 {
                     var planetName = global::StartOfRound.Instance.levels[moon].PlanetName;
                     if (MoonsByName.ContainsKey(planetName))

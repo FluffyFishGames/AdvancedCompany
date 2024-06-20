@@ -23,18 +23,62 @@ namespace AdvancedCompany
     [BepInDependency("com.rune580.LethalCompanyInputUtils", BepInDependency.DependencyFlags.HardDependency)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string Version = "1.1.10";
+        public const string Version = "1.1.27";
         private const string GUID = "com.potatoepet.AdvancedCompany";
         internal static ManualLogSource Log;
         internal static Plugin Instance;
         internal static bool UseAnimationOverride = false;
         internal static List<Assembly> AssembliesToScan = new List<Assembly>();
-        internal static bool Cripple = false;
+
+        private static List<Type> PatchTypes = new List<Type>()
+        {
+            typeof(AdvancedCompany.Hooks.PlayerControllerB.KillPlayer),
+            typeof(Network.Manager),
+            typeof(BulletProofVest),
+            typeof(LightningRod),
+            typeof(VisionEnhancer),
+            typeof(Flippers),
+            typeof(LightShoes),
+            typeof(BunnyEars),
+            typeof(PietSmietController),
+            typeof(Game.Manager),
+            typeof(Patches.AnimationPatches),
+            typeof(Patches.FieldPatches),
+            typeof(Patches.BalancingPatches),
+            typeof(Patches.DebugPatches),
+            typeof(Patches.EnemyAICollisionDetect),
+            typeof(Patches.Flavour),
+            typeof(Patches.GameNetworkManager),
+            typeof(Patches.GrabbableObject),
+            typeof(Patches.HUDManager),
+            typeof(Patches.InventoryPatches),
+            typeof(Patches.ItemDataHandling),
+            typeof(Patches.ItemDropship),
+            typeof(Patches.MaskedEnemyPatches),
+            typeof(Patches.SavePatches),
+            typeof(Game.MobileTerminal),
+            typeof(Rocket),
+            typeof(LobbySetup),
+            typeof(ClientSetup),
+            typeof(DeathScreen),
+            typeof(Game.Player),
+            typeof(Patches.LobbySizePatches),
+            typeof(PostProcessing.Volumes),
+            typeof(Patches.PlayerControllerB),
+            typeof(Patches.RoundManager),
+            typeof(Patches.StartOfRound),
+            typeof(Patches.Terminal),
+            typeof(Patches.TimeOfDay),
+            typeof(Patches.Compability),
+            typeof(UI.Endscreen),
+            typeof(Utils)
+        };
 
         private void Awake()
         {
             try
             {
+                
                 Log = base.Logger;
 
                 Lib.Mod.RegisterRequiredMod(this);
@@ -68,48 +112,13 @@ namespace AdvancedCompany
                 BootManager.Boot();
 
                 Log.LogDebug("Patching with harmony...");
-                Harmony.CreateAndPatchAll(typeof(AdvancedCompany.Hooks.PlayerControllerB.KillPlayer), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Network.Manager), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(BulletProofVest), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(LightningRod), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(VisionEnhancer), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Flippers), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(LightShoes), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(BunnyEars), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(PietSmietController), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Game.Manager), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.AnimationPatches), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.FieldPatches), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.BalancingPatches), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.DebugPatches), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.EnemyAICollisionDetect), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.Flavour), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.GameNetworkManager), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.GrabbableObject), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.HUDManager), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.InventoryPatches), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.ItemDataHandling), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.ItemDropship), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.MaskedEnemyPatches), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.SavePatches), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Game.MobileTerminal), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Rocket), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(LobbySetup), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(ClientSetup), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(DeathScreen), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Game.Player), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.LobbySizePatches), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(PostProcessing.Volumes), "AdvancedCompany");
+                foreach (var t in PatchTypes)
+                {
+                    Harmony.CreateAndPatchAll(t, "AdvancedCompany");
+                }
+
                 Patches.LobbySizePatches.PatchAsync();
                 Patches.FieldPatches.ApplyPatches();
-                Harmony.CreateAndPatchAll(typeof(Patches.PlayerControllerB), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.RoundManager), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.StartOfRound), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.Terminal), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.TimeOfDay), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Patches.Compability), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(UI.Endscreen), "AdvancedCompany");
-                Harmony.CreateAndPatchAll(typeof(Utils), "AdvancedCompany");
 
                 Plugin.Log.LogInfo("Loading cosmetics...");
                 foreach (var f in Directory.EnumerateFiles(BepInEx.Paths.PluginPath, "*.cosmetics", SearchOption.AllDirectories))
@@ -147,16 +156,23 @@ namespace AdvancedCompany
 
         private static void ExtractMoreCompanyAssets(string fileName)
         {
-            Plugin.Log.LogMessage("Found MoreCompany.dll. Extracting assets.");
-            AssemblyDefinition def = AssemblyDefinition.ReadAssembly(fileName);
-            foreach (var resource in def.MainModule.Resources)
+            try
             {
-                if (resource is EmbeddedResource res && res.Name == "MoreCompany.Resources.morecompany.cosmetics")
+                Plugin.Log.LogMessage("Found MoreCompany.dll. Extracting assets.");
+                AssemblyDefinition def = AssemblyDefinition.ReadAssembly(fileName);
+                foreach (var resource in def.MainModule.Resources)
                 {
-                    Plugin.Log.LogMessage("Found cosmetics. Loading them.");
-                    AssetBundle assets = AssetBundle.LoadFromMemory(res.GetResourceData());
-                    AdvancedCompany.Lib.Cosmetics.LoadCosmeticsFromBundle(assets);
+                    if (resource is EmbeddedResource res && res.Name == "MoreCompany.Resources.morecompany.cosmetics")
+                    {
+                        Plugin.Log.LogMessage("Found cosmetics. Loading them.");
+                        AssetBundle assets = AssetBundle.LoadFromMemory(res.GetResourceData());
+                        AdvancedCompany.Lib.Cosmetics.LoadCosmeticsFromBundle(assets);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.LogError("Error while extracting MoreCompany assets: " + ex);
             }
         }
 
@@ -226,11 +242,6 @@ namespace AdvancedCompany
             {
                 PatchMoreEmotes(assembly);
             }
-        }
-
-        private static bool Deactivate()
-        {
-            return false;
         }
 
         private static void PatchMoreEmotes(Assembly assembly)

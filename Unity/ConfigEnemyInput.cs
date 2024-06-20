@@ -23,7 +23,7 @@ namespace AdvancedCompany
             }));
             PowerLevelInput.onValueChanged.AddListener(new UnityEngine.Events.UnityAction<string>((val) =>
             {
-                if (int.TryParse(val, out int @int))
+                if (float.TryParse(val, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float @int))
                     Item.PowerLevel = @int;
             }));
 
@@ -45,7 +45,7 @@ namespace AdvancedCompany
             var inactiveTextColor = new Color(198f / 255f, 77f / 255f, 14f / 255f, 1f);
             var activeTextColor = new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f);
             OverridePowerLevelToggle.SetIsOnWithoutNotify(Item.OverridePowerLevel);
-            PowerLevelInput.SetTextWithoutNotify(Item.OverridePowerLevel ? Item.PowerLevel.ToString(System.Globalization.CultureInfo.InvariantCulture) : ((int)Item.Default(nameof(Item.PowerLevel))).ToString(System.Globalization.CultureInfo.InvariantCulture));
+            PowerLevelInput.SetTextWithoutNotify(Item.OverridePowerLevel ? Item.PowerLevel.ToString(System.Globalization.CultureInfo.InvariantCulture) : ((float)Item.Default(nameof(Item.PowerLevel))).ToString(System.Globalization.CultureInfo.InvariantCulture));
             PowerLevelInput.interactable = Item.OverridePowerLevel;
             PowerLevelInput.textComponent.color = PowerLevelInput.interactable ? activeTextColor : inactiveTextColor;
         }

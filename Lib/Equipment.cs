@@ -16,7 +16,31 @@ namespace AdvancedCompany.Lib
         }
         public delegate void EquipmentListener(GameNetcodeStuff.PlayerControllerB controller, Slot slot, GameObject[] objs);
         public static event EquipmentListener Listener;
-        
+
+        public static GrabbableObject GetHeadEquipment(GameNetcodeStuff.PlayerControllerB controller)
+        {
+            var player = Game.Player.GetPlayer((int)controller.playerClientId);
+            if (player != null)
+                return player.Controller.ItemSlots[10];
+            return null;
+        }
+
+        public static GrabbableObject GetBodyEquipment(GameNetcodeStuff.PlayerControllerB controller)
+        {
+            var player = Game.Player.GetPlayer((int)controller.playerClientId);
+            if (player != null)
+                return player.Controller.ItemSlots[11];
+            return null;
+        }
+
+        public static GrabbableObject GetFeetEquipment(GameNetcodeStuff.PlayerControllerB controller)
+        {
+            var player = Game.Player.GetPlayer((int)controller.playerClientId);
+            if (player != null)
+                return player.Controller.ItemSlots[12];
+            return null;
+        }
+
         public static GameObject[] GetSpawnedEquipment(GameNetcodeStuff.PlayerControllerB controller, Slot slot)
         {
             var player = Game.Player.GetPlayer((int)controller.playerClientId);
