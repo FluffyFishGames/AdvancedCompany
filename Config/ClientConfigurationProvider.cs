@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace AdvancedCompany.Config
@@ -23,7 +24,7 @@ namespace AdvancedCompany.Config
         {
             get
             {
-                return System.IO.Path.Combine(BepInEx.Paths.ConfigPath, "../", "presets", "advancedcompany", "client");
+                return Path.Combine(Path.GetFullPath(Environment.ExpandEnvironmentVariables("%appdata%/../LocalLow/ZeekerssRBLX/Lethal Company")), "presets", "client");
             }
         }
         public ClientConfigurationProvider()

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using AdvancedCompany.Config;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,13 +12,21 @@ namespace AdvancedCompany.Unity
         internal static Image LoadImage;
         internal static TextMeshProUGUI SimplifiedCopyright;
 
+        void Update()
+        {
+            if (ClientConfiguration.Instance != null && SimplifiedCopyright != null && SimplifiedCopyright.gameObject != null && ClientConfiguration.Instance.Graphics.HideCopyright == SimplifiedCopyright.gameObject.activeSelf)
+            {
+                SimplifiedCopyright.gameObject.SetActive(!ClientConfiguration.Instance.Graphics.HideCopyright);
+            }
+        }
+
         void LateUpdate()
         {
-            /*var logo = ClientConfiguration.Instance.Graphics.ShowOriginalLogo ? OriginalLogo : (Lib.Flavour.OverrideLogo != null ? Lib.Flavour.OverrideLogo : OriginalLogo);
+            var logo = ClientConfiguration.Instance.Graphics.ShowOriginalLogo ? OriginalLogo : (Lib.Flavour.OverrideLogo != null ? Lib.Flavour.OverrideLogo : OriginalLogo);
             if (HeaderImage != null && HeaderImage.sprite != logo)
                 HeaderImage.sprite = logo;
             if (LoadImage != null && LoadImage.sprite != logo)
-                LoadImage.sprite = logo;*/
+                LoadImage.sprite = logo;
         }
 
         void Awake()

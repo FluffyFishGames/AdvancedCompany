@@ -68,6 +68,7 @@ public class PlayerSettings : BaseSettings<PlayerConfiguration>
     [Header("Graphics")]
     public ConfigTabContent GraphicsTabContent;
     private ConfigToggle ShowOriginalLogo;
+    private ConfigToggle HideCopyright;
     private ConfigToggle ShowSimplifiedCopyrightNotice;
     private ConfigSlider MusicVolume;
     private ConfigSlider VisionEnhancerBrightness;
@@ -117,6 +118,7 @@ public class PlayerSettings : BaseSettings<PlayerConfiguration>
         InvertScroll.UpdateValue();
         SaveInProfile.UpdateValue();
         ShowOriginalLogo.UpdateValue();
+        HideCopyright.UpdateValue();
         MusicVolume.UpdateValue();
         VisionEnhancerBrightness.UpdateValue();
         DisableMusic.UpdateValue();
@@ -353,7 +355,8 @@ public class PlayerSettings : BaseSettings<PlayerConfiguration>
 
         var logoContainer = GraphicsTabContent.AddContainer("Logo", "Change how AdvancedCompany handles logo replacements. You can show the original Lethal Company logo (even if a logo is defined in your ModPack) and make the copyright notice simplified (text in screen corner).");
         ShowOriginalLogo = logoContainer.AddToggle(Configuration.Graphics.Field(nameof(Configuration.Graphics.ShowOriginalLogo)), "Original logo");
-        
+        HideCopyright = logoContainer.AddToggle(Configuration.Graphics.Field(nameof(Configuration.Graphics.HideCopyright)), "Hide copyright");
+
         var audioContainer = GraphicsTabContent.AddContainer("Audio", "Change audio volume.");
         MusicVolume = audioContainer.AddSlider(Configuration.Graphics.Field(nameof(Configuration.Graphics.MusicVolume)), "Music volume");
 

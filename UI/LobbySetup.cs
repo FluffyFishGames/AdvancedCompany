@@ -89,6 +89,7 @@ namespace AdvancedCompany.UI
             {
                 ServerConfiguration.Instance.CopyFrom(Settings.SelectedPreset.Configuration);
                 ServerConfiguration.Instance.WasLoaded();
+                StartHost();
             }
             else
                 LobbyScreen.SetActive(true);

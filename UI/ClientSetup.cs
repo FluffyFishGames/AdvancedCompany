@@ -2,6 +2,7 @@
 using AdvancedCompany.Patches;
 using HarmonyLib;
 using System;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +24,9 @@ namespace AdvancedCompany.UI
 
         public static void Boot()
         {
-            var selectedPathFile = System.IO.Path.GetFullPath(BepInEx.Paths.PluginPath + "/../presets/advancedcompany/selected");
+            var directory = Path.Combine(Path.GetFullPath(Environment.ExpandEnvironmentVariables("%appdata%/../LocalLow/ZeekerssRBLX/Lethal Company")), "presets", "client");
+            var selectedPathFile = Path.Combine(directory, "selected");
+
             if (System.IO.File.Exists(selectedPathFile))
             {
                 var preset = System.IO.File.ReadAllText(selectedPathFile);
@@ -66,7 +69,11 @@ namespace AdvancedCompany.UI
                 SelectedPreset = presetName;
                 try
                 {
-                    var selectedPathFile = System.IO.Path.GetFullPath(BepInEx.Paths.PluginPath + "/../presets/advancedcompany/selected");
+                    var directory = Path.Combine(Path.GetFullPath(Environment.ExpandEnvironmentVariables("%appdata%/../LocalLow/ZeekerssRBLX/Lethal Company")), "presets", "client");
+                    if (!Directory.Exists(directory))
+                        Directory.CreateDirectory(directory);
+                    var selectedPathFile = Path.Combine(directory, "selected");
+
                     System.IO.File.WriteAllText(selectedPathFile, presetName);
                 }
                 catch (Exception e)
@@ -124,7 +131,10 @@ namespace AdvancedCompany.UI
                     SelectedPreset = presetName;
                     try
                     {
-                        var selectedPathFile = System.IO.Path.GetFullPath(BepInEx.Paths.PluginPath + "/../presets/advancedcompany/selected");
+                        var directory = Path.Combine(Path.GetFullPath(Environment.ExpandEnvironmentVariables("%appdata%/../LocalLow/ZeekerssRBLX/Lethal Company")), "presets", "client");
+                        if (!Directory.Exists(directory))
+                            Directory.CreateDirectory(directory);
+                        var selectedPathFile = Path.Combine(directory, "selected");
                         System.IO.File.WriteAllText(selectedPathFile, presetName);
                     }
                     catch (Exception e)

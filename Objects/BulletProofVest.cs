@@ -47,39 +47,19 @@ namespace AdvancedCompany.Objects
             var inst = new List<CodeInstruction>(instructions);
             for (var i = 0; i < inst.Count; i++)
             {
-                if (inst[i].opcode == OpCodes.Callvirt && inst[i].operand.ToString() == "Void KillPlayer(UnityEngine.Vector3, Boolean, CauseOfDeath, Int32)")
+                if (inst[i].opcode == OpCodes.Callvirt && inst[i].operand.ToString() == "Void KillPlayer(UnityEngine.Vector3, Boolean, CauseOfDeath, Int32, UnityEngine.Vector3)")
                 {
-                    inst.RemoveAt(i - 15);
-                    inst.RemoveAt(i - 15);
-                    inst.RemoveAt(i - 15);
-                    inst.Insert(i - 15, inst[i - 7]);
-                    inst.Insert(i - 15, inst[i - 7]);
-                    inst.Insert(i - 15, inst[i - 7]);
-                    inst.Insert(i - 15, inst[i - 7]);
-                    inst.Insert(i - 15, inst[i - 7]);
-
-                    inst.RemoveAt(i - 6);
-                    inst.RemoveAt(i - 6);
-                    inst.RemoveAt(i - 6);
-                    inst.RemoveAt(i - 6);
-                    inst.RemoveAt(i - 6);
-                    inst.RemoveAt(i - 6);
-                    inst.RemoveAt(i - 6);
-                    inst.RemoveAt(i - 6);
-                    inst.RemoveAt(i - 6);
-
-                    inst.Insert(i - 6, inst[i - 10]);
-                    inst.Insert(i - 6, inst[i - 11]);
-                    inst.Insert(i - 6, inst[i - 12]);
-                    inst.Insert(i - 6, inst[i - 13]);
-                    inst.Insert(i - 6, inst[i - 14]);
-                    inst.Insert(i - 6, inst[i - 15]);
-                    inst.Insert(i - 6, inst[i - 16]);
-                    inst.Insert(i - 6, inst[i - 17]);
-                    inst.Insert(i - 6, inst[i - 18]);
-                    inst.Insert(i - 6, inst[i - 19]);
-                    inst.Insert(i - 6, inst[i - 20]);
-                    inst.Insert(i - 6, inst[i - 21]);
+                    for (var j = i; j > 0; j--)
+                    {
+                        if (inst[j].opcode == OpCodes.Ble || inst[j].opcode == OpCodes.Ble_S)
+                        {
+                            inst.RemoveAt(j);
+                            inst.Insert(j, new CodeInstruction(OpCodes.Pop));
+                            inst.Insert(j, new CodeInstruction(OpCodes.Pop));
+                            i++;
+                            break;
+                        }
+                    }
                 }
             }
             for (var i = 0; i < inst.Count; i++)
@@ -88,8 +68,8 @@ namespace AdvancedCompany.Objects
                 {
                     inst.Insert(i + 1, new CodeInstruction(OpCodes.Call, method));
                     inst.Insert(i + 1, new CodeInstruction(OpCodes.Ldc_I4_0));
-                    inst.Insert(i + 1, inst[i - 12]);
-                    inst.Insert(i + 1, inst[i - 13]);
+                    inst.Insert(i + 1, inst[i - 10]);
+                    inst.Insert(i + 1, inst[i - 11]);
                 }
             }
             /*var log = "";

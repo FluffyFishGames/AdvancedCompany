@@ -48,10 +48,10 @@ namespace AdvancedCompany.Patches
                     if (branchTarget != null)
                     {
                         var inserts = new List<CodeInstruction>() {
+                            inst[i + 11],
                             inst[i + 12],
                             inst[i + 13],
                             inst[i + 14],
-                            inst[i + 15],
                             new CodeInstruction(OpCodes.Call, typeof(Game.Manager.Items).GetMethod("IsBuyable", BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)),
                             new CodeInstruction(OpCodes.Brfalse, branchTarget),
                             new CodeInstruction(inst[i + 9].opcode, inst[i + 9].operand)

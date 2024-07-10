@@ -228,7 +228,7 @@ namespace AdvancedCompany.Patches
             global::HUDManager.Instance.HideHUD(hide: true);
             global::StartOfRound.Instance.shipAnimator.speed = 1000f;
             localPlayer.StopHoldInteractionOnTrigger();
-            localPlayer.KillPlayerServerRpc((int)localPlayer.playerClientId, false, Vector3.zero, -1, -1);
+            localPlayer.KillPlayerServerRpc((int)localPlayer.playerClientId, false, Vector3.zero, -1, -1, Vector3.zero);
             global::StartOfRound.Instance.SwitchCamera(global::StartOfRound.Instance.spectateCamera);
             localPlayer.isInGameOverAnimation = 0.01f;
             localPlayer.cursorTip.text = "";
@@ -322,7 +322,7 @@ namespace AdvancedCompany.Patches
             int j = 0;
             for (var i = 0; i < inst.Count; i++)
             {
-                if ((inst[i].opcode == OpCodes.Call && inst[i].operand.ToString() == "Steamworks.Data.LobbyQuery WithKeyValue(System.String, System.String)"))
+                if ((inst[i].opcode == OpCodes.Call && inst[i].operand.ToString() == "Steamworks.Data.LobbyQuery WithKeyValue(System.String, System.String)") && inst[i-4].opcode == OpCodes.Ldstr && inst[i-4].operand.ToString() == "vers")
                 {
                     Plugin.Log.LogDebug("Adding .WithKeyValue(\"advcmpny\", Lib.Mod.GetHash()) to lobby search.");
                     inst.Insert(i + 1, inst[i - 0]);
