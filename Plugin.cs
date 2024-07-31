@@ -23,12 +23,13 @@ namespace AdvancedCompany
     [BepInDependency("com.rune580.LethalCompanyInputUtils", BepInDependency.DependencyFlags.HardDependency)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string Version = "1.1.29";
+        public const string Version = "1.1.30";
         private const string GUID = "com.potatoepet.AdvancedCompany";
         internal static ManualLogSource Log;
         internal static Plugin Instance;
         internal static bool UseAnimationOverride = false;
         internal static List<Assembly> AssembliesToScan = new List<Assembly>();
+        internal static Assembly MoreCompanyAssembly;
 
         private static List<Type> PatchTypes = new List<Type>()
         {
@@ -85,7 +86,7 @@ namespace AdvancedCompany
                 try
                 {
                     Plugin.Log.LogInfo("Manually loading MoreCompany stub...");
-                    AppDomain.CurrentDomain.Load(System.IO.File.ReadAllBytes(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(typeof(Plugin).Assembly.Location), "MoreCompany.dll")));
+                    MoreCompanyAssembly = AppDomain.CurrentDomain.Load(System.IO.File.ReadAllBytes(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(typeof(Plugin).Assembly.Location), "MoreCompany.dll")));
                     Plugin.Log.LogInfo("MoreCompany Stub loaded!");
                 }
                 catch (Exception e)
@@ -170,6 +171,7 @@ namespace AdvancedCompany
                         AdvancedCompany.Lib.Cosmetics.LoadCosmeticsFromBundle(assets);
                     }
                 }
+                def.Dispose();
             }
             catch (Exception ex)
             {
