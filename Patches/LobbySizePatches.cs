@@ -451,6 +451,16 @@ namespace AdvancedCompany.Patches
             return inst.AsEnumerable();
         }
 
+        [HarmonyPatch(typeof(BushWolfEnemy), "GetClosestPlayerToNest")]
+        [HarmonyTranspiler]
+        static IEnumerable<CodeInstruction> PatchBushWolfEnemyGetClosestPlayerToNest(IEnumerable<CodeInstruction> instructions)
+        {
+            Plugin.Log.LogDebug("Patching BushWolfEnemy->GetClosestPlayerToNest...");
+            instructions = ReplaceLowerThanFourWithPlayerCount(instructions);
+            Plugin.Log.LogDebug("Patched BushWolfEnemy->GetClosestPlayerToNest!");
+            return instructions;
+        }
+
         [HarmonyPatch(typeof(global::GameNetworkManager), "ConnectionApproval")]
         [HarmonyTranspiler]
         static IEnumerable<CodeInstruction> PatchGameNetworkManagerConnectionApproval(IEnumerable<CodeInstruction> instructions)
@@ -1297,6 +1307,28 @@ namespace AdvancedCompany.Patches
             }
         }
 
+        [HarmonyPatch(typeof(ButlerEnemyAI), "Start")]
+        [HarmonyPrefix]
+        static void ButlerEnemyAIStart(ButlerEnemyAI __instance)
+        {
+            try
+            {
+                var playerCount = ServerConfiguration.Instance.Lobby.LobbySize;
+                Plugin.Log.LogInfo("Extending Butler->timeOfLastSeenPlayer for " + playerCount + " players.");
+                __instance.timeOfLastSeenPlayers = new float[playerCount];
+                Plugin.Log.LogInfo("Extending Butler->seenPlayers for " + playerCount + " players.");
+                __instance.seenPlayers = new bool[playerCount];
+                Plugin.Log.LogInfo("Extending Butler->lastSeenPlayerPositions for " + playerCount + " players.");
+                __instance.lastSeenPlayerPositions = new Vector3[playerCount];
+            }
+            catch (Exception e)
+            {
+                Plugin.Log.LogError("Error while extending ButlerEnemyAI:");
+                Plugin.Log.LogError(e);
+                global::GameNetworkManager.Instance.disconnectionReasonMessage = "Error while extending ButlerEnemyAI.";
+                global::GameNetworkManager.Instance.Disconnect();
+            }
+        }
         [HarmonyPatch(typeof(ForestGiantAI), "Start")]
         [HarmonyPrefix]
         static void ForestGiantStart(ForestGiantAI __instance)
@@ -1315,6 +1347,8 @@ namespace AdvancedCompany.Patches
                 global::GameNetworkManager.Instance.Disconnect();
             }
         }
+
+
 
         private static FieldInfo CrawlerAINearPlayerColliders = typeof(CrawlerAI).GetField("nearPlayerColliders", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
         [HarmonyPatch(typeof(CrawlerAI), "Start")]

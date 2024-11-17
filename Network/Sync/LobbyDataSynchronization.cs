@@ -296,19 +296,25 @@ namespace AdvancedCompany.Network.Sync
                     var components = item.Value.Prefab.GetComponents<Component>();
                     foreach (var c in components)
                     {
-                        var aName = c.GetType().Assembly.GetName().Name;
-                        if (!aName.StartsWith("Assembly") && !aName.StartsWith("Unity"))
+                        try
                         {
-                            foreach (var plugin in BepInEx.Bootstrap.Chainloader.PluginInfos)
+                            var aName = c.GetType().Assembly.GetName().Name;
+                            if (!aName.StartsWith("Assembly") && !aName.StartsWith("Unity"))
                             {
-                                if (plugin.Value.Instance.GetType().Assembly == c.GetType().Assembly)
+                                foreach (var plugin in BepInEx.Bootstrap.Chainloader.PluginInfos)
                                 {
-                                    pluginName = plugin.Value.Metadata.Name;
-                                    break;
+                                    if (plugin.Value.Instance.GetType().Assembly == c.GetType().Assembly)
+                                    {
+                                        pluginName = plugin.Value.Metadata.Name;
+                                        break;
+                                    }
                                 }
+                                if (pluginName == null)
+                                    pluginName = aName;
                             }
-                            if (pluginName == null)
-                                pluginName = aName;
+                        } catch (Exception)
+                        {
+                            Plugin.Log.LogWarning("Couldnt determine mod for component " + c);
                         }
                     }
                     identifier += ":" + (pluginName == null ? "Vanilla" : pluginName);

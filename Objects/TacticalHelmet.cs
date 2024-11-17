@@ -58,6 +58,7 @@ namespace AdvancedCompany.Objects
             //    insertedBattery = new Battery(false, 1f);
 
             thisAudio = GetComponent<AudioSource>();
+            wallAudio = gameObject.AddComponent<AudioSource>();
             target = transform.Find("Target").GetComponent<AudioSource>();
             foreach (var item in StartOfRound.Instance.allItemsList.itemsList)
             {
@@ -71,6 +72,20 @@ namespace AdvancedCompany.Objects
                     this.startTransmissionSFX = original.startTransmissionSFX;
                     this.recordingRange = original.recordingRange;
                     this.playerDieOnWalkieTalkieSFX = original.playerDieOnWalkieTalkieSFX;
+                    this.wallAudios = original.wallAudios;
+                    this.wallAudio.dopplerLevel = original.wallAudio.dopplerLevel;
+                    this.wallAudio.bypassEffects = original.wallAudio.bypassEffects;
+                    this.wallAudio.bypassListenerEffects = original.wallAudio.bypassListenerEffects;
+                    this.wallAudio.bypassReverbZones = original.wallAudio.bypassReverbZones;
+                    this.wallAudio.ignoreListenerPause = original.wallAudio.ignoreListenerPause;
+                    this.wallAudio.ignoreListenerVolume = original.wallAudio.ignoreListenerVolume;
+                    this.wallAudio.loop = original.wallAudio.loop;
+                    this.wallAudio.maxDistance = original.wallAudio.maxDistance;
+                    this.wallAudio.minDistance = original.wallAudio.minDistance;
+                    this.wallAudio.outputAudioMixerGroup = original.wallAudio.outputAudioMixerGroup;
+                    this.wallAudio.volume = original.wallAudio.volume;
+                    this.wallAudio.spatialBlend = original.wallAudio.spatialBlend;
+                    this.wallAudio.spatialize = original.wallAudio.spatialize;
                     break;
                 }
             }
